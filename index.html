@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>词根词缀刷题库 · 小黑课堂四级词汇讲义</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===== tokens ===== */
+:root{
+  --paper:#F2EEE4;
+  --paper-2:#EAE4D6;
+  --card:#FFFCF6;
+  --ink:#15150F;
+  --ink-soft:#403C33;
+  --muted:#8C8474;
+  --line:#D9D1BF;
+  --line-soft:#E7E1D3;
+  --red:#B93B2B;
+  --red-soft:#F3E1DC;
+  --green:#2F6D4F;
+  --green-soft:#E0ECE3;
+  --blue:#26506E;
+  --serif:'Noto Serif SC','Songti SC','Source Han Serif SC','SimSun',Georgia,serif;
+  --mono:'IBM Plex Mono','JetBrains Mono',Consolas,'Courier New',monospace;
+  --r:3px;
+  --shadow:0 1px 0 rgba(21,21,15,.05), 0 10px 30px -18px rgba(21,21,15,.45);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--serif);
+  color:var(--ink);
+  background-color:var(--paper);
+  background-image:
+    radial-gradient(120% 90% at 12% -10%, rgba(255,255,255,.85), rgba(255,255,255,0) 60%),
+    repeating-linear-gradient(0deg, rgba(21,21,15,.028) 0 1px, transparent 1px 34px);
+  min-height:100vh;
+  line-height:1.7;
+  padding-bottom:80px;
+}
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.32;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.30'/%3E%3C/svg%3E");
+  mix-blend-mode:multiply;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+
+/* ===== header ===== */
+header{padding:34px 0 16px}
+.brand{display:flex;align-items:flex-start;gap:16px}
+.seal{
+  flex:0 0 auto;width:56px;height:56px;border-radius:var(--r);
+  background:var(--red);color:#FFF7EE;display:grid;place-items:center;
+  font-size:30px;font-weight:900;line-height:1;transform:rotate(-3.5deg);
+  box-shadow:0 6px 18px -8px rgba(185,59,43,.9);letter-spacing:-2px;
+  font-family:var(--serif);
+}
+h1{font-size:29px;font-weight:900;letter-spacing:.5px;line-height:1.25}
+.sub{font-family:var(--mono);font-size:11.5px;color:var(--muted);letter-spacing:.4px;margin-top:5px}
+.sub b{color:var(--ink-soft);font-weight:600}
+.hstats{margin-left:auto;display:flex;gap:18px;text-align:right;padding-top:4px}
+.hstat span{display:block;font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.6px}
+.hstat b{font-size:20px;font-weight:600;font-family:var(--mono)}
+.hstat.g b{color:var(--green)}
+.hstat.r b{color:var(--red)}
+
+/* ===== tabs ===== */
+nav{display:flex;gap:2px;border-bottom:2px solid var(--ink);margin-top:14px;position:relative}
+nav button{
+  font-family:var(--serif);font-size:15px;font-weight:600;color:var(--muted);
+  background:none;border:0;border-bottom:3px solid transparent;cursor:pointer;
+  padding:10px 16px 11px;margin-bottom:-2px;transition:color .18s, border-color .18s;
+}
+nav button:hover{color:var(--ink)}
+nav button.on{color:var(--ink);border-bottom-color:var(--red)}
+nav button i{font-family:var(--mono);font-style:normal;font-size:10px;color:var(--muted);margin-left:5px;letter-spacing:.5px}
+nav button.on i{color:var(--red)}
+
+/* ===== panels ===== */
+main{padding-top:26px}
+.view{display:none}
+.view.on{display:block;animation:rise .4s cubic-bezier(.2,.8,.3,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.d1{animation-delay:.03s}.d2{animation-delay:.09s}.d3{animation-delay:.15s}
+
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);position:relative;
+}
+.card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--ink);opacity:.85;
+}
+.card.pad{padding:24px 26px}
+.card h2{font-size:16px;font-weight:900;letter-spacing:.6px;margin-bottom:14px}
+.card h2 em{font-style:normal;font-family:var(--mono);font-size:10.5px;color:var(--muted);font-weight:400;letter-spacing:.8px;margin-left:8px}
+
+/* ===== quiz setup ===== */
+.setup{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:18px 22px}
+.fld{position:relative}
+.fld>label{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:1.2px;color:var(--muted);margin-bottom:7px;text-transform:uppercase}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{
+  font-family:var(--serif);font-size:13px;font-weight:600;color:var(--ink-soft);
+  background:var(--paper-2);border:1px solid var(--line);border-radius:2px;
+  padding:5px 11px;cursor:pointer;transition:.15s;
+}
+.chip:hover{border-color:var(--ink);transform:translateY(-1px)}
+.chip.on{background:var(--ink);color:var(--card);border-color:var(--ink)}
+.chip.on::before{content:'✓ ';font-size:11px}
+.hint{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:8px;letter-spacing:.3px}
+.btnrow{display:flex;gap:12px;align-items:center;margin-top:24px;flex-wrap:wrap}
+.btn{
+  font-family:var(--serif);font-size:15px;font-weight:600;cursor:pointer;
+  border-radius:2px;padding:11px 26px;transition:.16s;border:1px solid var(--ink);
+  background:var(--ink);color:var(--card);
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px -12px rgba(21,21,15,.9)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--paper-2)}
+.btn.small{font-size:13px;padding:7px 15px}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* ===== quiz stage ===== */
+.stage{margin-top:22px}
+.qhead{
+  display:flex;align-items:center;gap:12px;margin-bottom:16px;
+  font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--muted);
+}
+.qhead .qno{font-size:15px;font-weight:600;color:var(--ink);font-family:var(--mono)}
+.qhead .qtag{border:1px solid var(--line);border-radius:2px;padding:2px 8px;background:var(--paper-2)}
+.qhead .sp{flex:1;height:1px;background:var(--line-soft)}
+.bar{height:3px;background:var(--line-soft);border-radius:2px;overflow:hidden;margin-bottom:22px}
+.bar i{display:block;height:100%;background:var(--red);transition:width .35s cubic-bezier(.2,.8,.3,1)}
+
+.stem{margin-bottom:20px}
+.stem .big{
+  font-family:var(--mono);font-size:clamp(30px,6.4vw,46px);font-weight:600;letter-spacing:-1px;
+  line-height:1.15;word-break:break-word;
+}
+.stem .big.zh{font-family:var(--serif);font-weight:900;font-size:clamp(24px,4.6vw,34px);letter-spacing:.5px}
+.stem .big .dash{color:var(--red)}
+.stem .ask{font-size:14.5px;color:var(--ink-soft);margin-top:9px;font-weight:400}
+.stem .meta{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:7px;letter-spacing:.4px}
+
+.opts{display:grid;gap:9px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opt{
+  display:flex;align-items:center;gap:12px;text-align:left;cursor:pointer;
+  background:var(--card);border:1px solid var(--line);border-radius:2px;
+  padding:13px 15px;font-family:var(--serif);font-size:15.5px;color:var(--ink);
+  transition:transform .14s, border-color .14s, background .14s, box-shadow .14s;
+}
+.opt:hover{border-color:var(--ink);transform:translateX(4px)}
+.opt .key{
+  flex:0 0 auto;width:24px;height:24px;border-radius:2px;background:var(--paper-2);
+  border:1px solid var(--line);display:grid;place-items:center;
+  font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--muted);
+}
+.opt .txt{flex:1;line-height:1.45}
+.opt .txt .en{font-family:var(--mono);font-size:16px;font-weight:600;letter-spacing:-.2px}
+.opt .txt .ex{display:block;font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:3px;letter-spacing:.2px}
+.opt.ok{background:var(--green-soft);border-color:var(--green)}
+.opt.ok .key{background:var(--green);border-color:var(--green);color:#fff}
+.opt.no{background:var(--red-soft);border-color:var(--red);animation:shake .34s}
+.opt.no .key{background:var(--red);border-color:var(--red);color:#fff}
+.opt.lock{pointer-events:none;opacity:.72}
+.opt.ok.lock,.opt.no.lock{opacity:1}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}60%{transform:translateX(5px)}}
+
+.spellin{
+  width:100%;font-family:var(--mono);font-size:22px;letter-spacing:2px;
+  background:var(--card);border:1px solid var(--line);border-bottom:2px solid var(--ink);
+  border-radius:2px;padding:12px 14px;color:var(--ink);outline:none;
+}
+.spellin:focus{border-color:var(--red);border-bottom-color:var(--red)}
+
+/* ===== explain ===== */
+.explain{margin-top:20px;border-top:1px dashed var(--line);padding-top:18px;animation:rise .35s both}
+.verdict{display:flex;align-items:center;gap:10px;font-weight:900;font-size:17px;margin-bottom:14px}
+.verdict.ok{color:var(--green)}
+.verdict.no{color:var(--red)}
+.verdict .mark{
+  width:24px;height:24px;border-radius:50%;display:grid;place-items:center;
+  color:#fff;font-size:14px;font-family:var(--mono);
+}
+.verdict.ok .mark{background:var(--green)}
+.verdict.no .mark{background:var(--red)}
+.exgrid{display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:760px){.exgrid.split{grid-template-columns:1.15fr .85fr}}
+.exbox{background:var(--paper-2);border:1px solid var(--line);border-radius:2px;padding:15px 17px}
+.exbox .lbl{font-family:var(--mono);font-size:10px;letter-spacing:1.4px;color:var(--muted);text-transform:uppercase;margin-bottom:9px}
+.affixline{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.affixline .a{font-family:var(--mono);font-size:26px;font-weight:600;letter-spacing:-.5px}
+.affixline .g{font-size:16px;font-weight:900;color:var(--red)}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.tag{font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);background:var(--card);border:1px solid var(--line);border-radius:2px;padding:2px 8px;letter-spacing:.3px}
+.wlist{display:grid;gap:8px;max-height:none}
+.wrow{display:flex;gap:10px;align-items:baseline;font-size:13.5px;line-height:1.5;padding-bottom:8px;border-bottom:1px dotted var(--line)}
+.wrow:last-child{border-bottom:0;padding-bottom:0}
+.wrow .w{font-family:var(--mono);font-weight:600;font-size:14.5px;flex:0 0 auto;min-width:96px;letter-spacing:-.2px}
+.wrow .p{font-family:var(--mono);font-size:11px;color:var(--muted);flex:0 0 auto}
+.wrow .c{flex:1;color:var(--ink-soft)}
+.wrow .c b{color:var(--red);font-weight:600}
+.wrow.hi{background:rgba(185,59,43,.06);padding:6px 8px;border-radius:2px;border-bottom:0}
+.thumbs{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.thumb{
+  width:96px;border:1px solid var(--line);border-radius:2px;overflow:hidden;cursor:zoom-in;
+  background:var(--card);transition:.16s;position:relative;
+}
+.thumb:hover{transform:translateY(-3px) rotate(-1deg);box-shadow:0 10px 22px -14px rgba(0,0,0,.6)}
+.thumb img{display:block;width:100%;height:auto}
+.thumb span{display:block;font-family:var(--mono);font-size:9.5px;text-align:center;padding:3px 0;border-top:1px solid var(--line);color:var(--muted)}
+
+/* ===== finish ===== */
+.score{display:flex;gap:30px;align-items:flex-end;margin:6px 0 18px;flex-wrap:wrap}
+.score .big{font-family:var(--mono);font-size:62px;font-weight:600;line-height:.9;letter-spacing:-3px}
+.score .big small{font-size:20px;color:var(--muted);letter-spacing:0}
+.score .lbl{font-family:var(--mono);font-size:11px;letter-spacing:1.2px;color:var(--muted)}
+.score .sub2{font-size:15px;color:var(--ink-soft);padding-bottom:6px}
+.wrongwall{display:grid;gap:8px;margin-top:6px}
+.wrongwall .wi{
+  display:flex;gap:10px;align-items:baseline;background:var(--red-soft);border:1px solid #E3C7BF;
+  border-radius:2px;padding:8px 12px;font-size:13.5px;
+}
+.wrongwall .wi .w{font-family:var(--mono);font-weight:600;flex:0 0 auto;min-width:110px}
+.wrongwall .wi .c{margin-left:auto;color:var(--ink-soft);font-size:12.5px}
+.empty{font-size:14px;color:var(--muted);font-family:var(--mono)}
+
+/* ===== library ===== */
+.grp{margin-bottom:30px}
+.grp-head{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.grp-head h3{font-size:20px;font-weight:900;letter-spacing:.8px;white-space:nowrap}
+.grp-head .rule{flex:1;height:2px;background:var(--ink);opacity:.85}
+.grp-head .pg{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.6px;white-space:nowrap}
+.relations{
+  display:flex;flex-wrap:wrap;gap:8px;padding:14px 16px;margin-bottom:16px;
+  background:var(--card);border:1px dashed var(--line);border-radius:var(--r);
+}
+.relations span{
+  font-family:var(--mono);font-size:12px;font-weight:600;padding:3px 10px;border-radius:2px;
+  background:var(--paper-2);border:1px solid var(--line);cursor:pointer;transition:.15s;
+}
+.relations span:hover{background:var(--ink);color:var(--card);border-color:var(--ink)}
+.relations b{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:1px;align-self:center;margin-right:4px}
+
+.afcard{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:16px 18px;margin-bottom:10px;box-shadow:var(--shadow);transition:.16s;
+}
+.afcard:hover{border-color:var(--ink)}
+.afcard .top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;cursor:pointer}
+.afcard .no{font-family:var(--mono);font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:2px;padding:1px 6px}
+.afcard .a{font-family:var(--mono);font-size:22px;font-weight:600;letter-spacing:-.5px}
+.afcard .g{font-size:15px;font-weight:900;color:var(--red)}
+.afcard .cnt{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.4px}
+.afcard .ws{margin-top:12px;padding-top:12px;border-top:1px dotted var(--line);display:none}
+.afcard.open .ws{display:block}
+.searchbox{
+  width:100%;font-family:var(--mono);font-size:14px;background:var(--card);
+  border:1px solid var(--line);border-bottom:2px solid var(--ink);border-radius:2px;
+  padding:11px 14px;outline:none;color:var(--ink);margin-bottom:14px;
+}
+.searchbox:focus{border-bottom-color:var(--red)}
+.wordtable{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.wt-head,.wt-row{display:grid;grid-template-columns:170px 1fr 120px;gap:14px;padding:10px 16px;align-items:baseline}
+.wt-head{background:var(--ink);color:var(--card);font-family:var(--mono);font-size:10.5px;letter-spacing:1.2px;position:sticky;top:0;z-index:5}
+.wt-row{border-top:1px solid var(--line-soft);font-size:13.5px;cursor:pointer;transition:background .13s}
+.wt-row:hover{background:var(--paper-2)}
+.wt-row .w{font-family:var(--mono);font-size:15px;font-weight:600;letter-spacing:-.2px}
+.wt-row .w em{display:block;font-style:normal;font-family:var(--mono);font-size:10.5px;color:var(--muted);font-weight:400;margin-top:2px}
+.wt-row .c{color:var(--ink-soft);line-height:1.5}
+.wt-row .t{text-align:right;font-family:var(--mono);font-size:11px;color:var(--red)}
+.wt-row.open{background:var(--paper-2);border-bottom-color:transparent}
+.wt-detail{padding:16px 18px 18px;background:var(--paper-2);border-left:2px solid var(--red);margin:-1px 0 6px;animation:rise .22s both}
+.wt-detail .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:1.2px;color:var(--muted);margin-bottom:9px}
+.wt-detail .exgrid{margin-bottom:0}
+.wt-detail .exbox:first-child{border-left:0;padding-left:0}
+@media(max-width:700px){.wt-head,.wt-row{grid-template-columns:1fr}.wt-head .t,.wt-row .t{text-align:left}.wt-head{display:none}}
+
+/* ===== add view ===== */
+.steps{display:grid;gap:18px}
+.step{border:1px solid var(--line);border-radius:var(--r);background:var(--card);padding:20px 22px;box-shadow:var(--shadow);position:relative}
+.step .sn{
+  position:absolute;left:-1px;top:-1px;width:30px;height:30px;background:var(--ink);color:var(--card);
+  display:grid;place-items:center;font-family:var(--mono);font-size:13px;border-radius:2px 0 2px 0;
+}
+.step h3{font-size:16px;font-weight:900;margin:0 0 6px 38px;letter-spacing:.5px}
+.step .desc{font-size:13.5px;color:var(--ink-soft);margin:0 0 14px 38px}
+.drop{
+  border:2px dashed var(--line);border-radius:var(--r);padding:26px;text-align:center;
+  cursor:pointer;transition:.18s;background:var(--paper-2);
+}
+.drop:hover,.drop.over{border-color:var(--red);background:var(--red-soft)}
+.drop b{font-size:15px;display:block}
+.drop span{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.prevgrid{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.prevgrid .pi{width:86px;position:relative;border:1px solid var(--line);border-radius:2px;overflow:hidden;background:var(--card)}
+.prevgrid .pi img{display:block;width:100%}
+.prevgrid .pi span{position:absolute;top:2px;right:3px;font-family:var(--mono);font-size:9px;background:rgba(21,21,15,.72);color:#fff;padding:1px 4px;border-radius:2px}
+textarea.ta{
+  width:100%;min-height:150px;font-family:var(--mono);font-size:12.5px;line-height:1.75;
+  background:var(--paper-2);border:1px solid var(--line);border-radius:2px;padding:12px 14px;
+  color:var(--ink);outline:none;resize:vertical;
+}
+textarea.ta:focus{border-color:var(--red);background:var(--card)}
+pre.fmt{
+  font-family:var(--mono);font-size:11.5px;line-height:1.8;background:var(--ink);color:#E8E2D4;
+  padding:13px 16px;border-radius:2px;overflow:auto;margin:10px 0 14px;
+}
+pre.fmt b{color:#F0A08C;font-weight:400}
+.status{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);margin-top:10px;letter-spacing:.2px;min-height:18px}
+.status.err{color:var(--red)}
+.status.ok{color:var(--green)}
+.previewbox{margin-top:14px;max-height:320px;overflow:auto;border:1px solid var(--line);border-radius:2px}
+.customlist{display:grid;gap:8px}
+.customlist .ci{display:flex;align-items:center;gap:10px;background:var(--paper-2);border:1px solid var(--line);border-radius:2px;padding:8px 12px;font-size:13.5px}
+.customlist .ci .a{font-family:var(--mono);font-weight:600}
+.customlist .ci .g{color:var(--red)}
+.customlist .ci .n{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.customlist .ci button{border:1px solid var(--line);background:var(--card);border-radius:2px;cursor:pointer;font-family:var(--mono);font-size:11px;padding:3px 8px;color:var(--red)}
+.customlist .ci button:hover{background:var(--red);color:#fff;border-color:var(--red)}
+
+/* ===== misc ===== */
+.lightbox{
+  position:fixed;inset:0;background:rgba(18,17,13,.9);display:none;z-index:10000;
+  place-items:center;padding:26px;cursor:zoom-out;
+}
+.lightbox.on{display:grid;animation:rise .22s both}
+.lightbox img{max-width:100%;max-height:92vh;border-radius:2px;box-shadow:0 30px 80px -30px #000}
+footer{
+  margin-top:50px;padding-top:16px;border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:10.5px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;
+}
+footer b{color:var(--ink-soft);font-weight:600}
+@media(max-width:640px){
+  .wrap{padding:0 14px}
+  h1{font-size:22px}
+  .seal{width:44px;height:44px;font-size:23px}
+  .hstats{display:none}
+  nav button{padding:9px 10px 10px;font-size:14px}
+  nav button i{display:none}
+  .card.pad{padding:18px}
+  .opt:hover{transform:none}
+  .relations span{font-size:11px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand">
+      <div class="seal">词</div>
+      <div>
+        <h1>词根词缀刷题库</h1>
+        <div class="sub">小黑课堂《英语四级词汇讲义》· 第一部分 前缀 &nbsp;/&nbsp; <b id="hcount">—</b></div>
+      </div>
+      <div class="hstats">
+        <div class="hstat g"><span>本轮正确</span><b id="s-right">0</b></div>
+        <div class="hstat r"><span>错题本</span><b id="s-wrong">0</b></div>
+      </div>
+    </div>
+
+    <nav>
+      <button data-view="quiz" class="on">开始刷题 <i>QUIZ</i></button>
+      <button data-view="affix">词根词缀库 <i>ROOTS</i></button>
+      <button data-view="words">单词库 <i>WORDS</i></button>
+      <button data-view="add">拍照扩充词库 <i>IMPORT</i></button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ============ QUIZ ============ -->
+    <section class="view on" id="view-quiz">
+      <div class="card pad d1" id="setupCard">
+        <h2>出题设置 <em>SETUP</em></h2>
+        <div class="setup">
+          <div class="fld">
+            <label>板块</label>
+            <div class="chips" id="set-board"></div>
+          </div>
+          <div class="fld">
+            <label>题型</label>
+            <div class="chips" id="set-qtype"></div>
+          </div>
+          <div class="fld">
+            <label>范围</label>
+            <div class="chips" id="set-scope"></div>
+          </div>
+          <div class="fld">
+            <label>题量</label>
+            <div class="chips" id="set-count"></div>
+          </div>
+        </div>
+        <div class="hint" id="poolHint">—</div>
+        <div class="btnrow">
+          <button class="btn" id="btn-start">开始刷题</button>
+          <button class="btn ghost small" id="btn-again">重做错题本</button>
+          <span class="hint" style="margin:0">快捷键：1–4 / A–D 选择，Enter 下一题</span>
+        </div>
+      </div>
+
+      <div class="stage" id="stage"></div>
+    </section>
+
+    <!-- ============ AFFIX LIBRARY ============ -->
+    <section class="view" id="view-affix">
+      <div id="affixList"></div>
+    </section>
+
+    <!-- ============ WORD LIBRARY ============ -->
+    <section class="view" id="view-words">
+      <input class="searchbox" id="wsearch" placeholder="搜索单词 / 中文释义 / 词缀…">
+      <div class="hint" id="wcount" style="margin-bottom:12px"></div>
+      <div class="wordtable" id="wordTable"></div>
+    </section>
+
+    <!-- ============ IMPORT ============ -->
+    <section class="view" id="view-add">
+      <div class="steps">
+
+        <div class="step">
+          <div class="sn">1</div>
+          <h3>上传课本照片</h3>
+          <p class="desc">可一次选多张。照片会存在本机浏览器里，仅用于识别和查看，不会上传到任何服务器。</p>
+          <div class="drop" id="drop">
+            <b>点这里选择照片，或把图片拖进来</b>
+            <span>JPG / PNG · 支持多选</span>
+            <input type="file" id="file" accept="image/*" multiple hidden>
+          </div>
+          <div class="prevgrid" id="prevgrid"></div>
+        </div>
+
+        <div class="step">
+          <div class="sn">2</div>
+          <h3>识别文字（可手工校对）</h3>
+          <p class="desc">点「开始识别」调用浏览器端 OCR。首次使用需要联网下载识别引擎（约 15MB，之后会缓存）。识别不准的地方直接在下面改。</p>
+          <div class="btnrow" style="margin-top:0">
+            <button class="btn" id="btn-ocr" disabled>开始识别</button>
+            <button class="btn ghost small" id="btn-cleartext">清空识别结果</button>
+          </div>
+          <div class="status" id="ocrStatus"></div>
+          <textarea class="ta" id="ocrText" placeholder="识别结果会出现在这里；也可以直接在这里粘贴 / 手打课本内容。"></textarea>
+          <div class="hint" id="parseHint">—</div>
+        </div>
+
+        <div class="step">
+          <div class="sn">3</div>
+          <h3>解析并加入词库</h3>
+          <p class="desc">按下面的格式解析。以 <b>数字 + 词缀 + ：中文含义</b> 开头的行会当成一个词缀，后面的行会当成它的例词。</p>
+          <pre class="fmt"><b>5. ex-：向外、前任</b>
+expose [ɪkˈspəʊz] v. 揭发；使暴露；使接触
+ex-wife [ˈekswaɪf] n. 前妻
+<b>6. inter-：相互</b>
+interact [ˌɪntərˈækt] v. 交流，互动；相互作用</pre>
+          <div class="btnrow" style="margin-top:0">
+            <button class="btn" id="btn-parse">解析预览</button>
+            <button class="btn ghost small" id="btn-commit" disabled>确认加入词库</button>
+          </div>
+          <div class="status" id="parseStatus"></div>
+          <div class="previewbox" id="parsePreview" style="display:none"></div>
+        </div>
+
+        <div class="step">
+          <div class="sn">4</div>
+          <h3>我的词库</h3>
+          <p class="desc">自己导入的词缀与例词都放在这里，可随时删除。导出 JSON 可以备份或换设备导入。</p>
+          <div class="customlist" id="customList"></div>
+          <div class="btnrow">
+            <button class="btn ghost small" id="btn-export">导出 JSON</button>
+            <button class="btn ghost small" id="btn-import">导入 JSON</button>
+            <input type="file" id="jsonfile" accept=".json" hidden>
+            <button class="btn ghost small" id="btn-reset" style="color:var(--red);border-color:var(--red)">清空自定义词库</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>数据来源：<b>本书 P5–P14 实拍照片</b>，共 <b id="f-affix">0</b> 个词缀 / <b id="f-word">0</b> 个单词</span>
+    <span>进度保存在本机浏览器 · 不上传服务器</span>
+    <span id="f-time"></span>
+  </footer>
+</div>
+
+<div class="lightbox" id="lightbox"><img id="lbimg" alt=""></div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
